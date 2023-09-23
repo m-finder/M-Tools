@@ -11,10 +11,13 @@ import SwiftUI
 struct M_ToolsApp: App {
     let persistenceController = PersistenceController.shared
 
+    @NSApplicationDelegateAdaptor(AppDelegate.self) private var appDelegate
+    
     var body: some Scene {
-        WindowGroup {
-            ContentView()
-                .environment(\.managedObjectContext, persistenceController.container.viewContext)
+
+        Settings {
+            SettingsView().frame(width: 455, height: 500).environment(\.managedObjectContext, persistenceController.container.viewContext)
         }
+        
     }
 }
