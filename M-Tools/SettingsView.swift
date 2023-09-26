@@ -27,10 +27,31 @@ struct SettingsView: View {
     
     @AppStorage("currentImageId") private var currentImageId: String = "A1AF9595-F3FC-4A4F-A134-8F9CED4B761D"
     @AppStorage("startUp") var startUp: Bool = false
+    
+    @AppStorage("texter") var texter: String = String(localized: "Drink more water.")
 
     var body: some View {
+        VStack(alignment: .center, spacing: 20){
+            HStack{
+                Text(String(localized: "MenuBar Text"))
+                TextField(String(localized: "Input something"), text: $texter)
+                    .textFieldStyle(.roundedBorder)
+                    .onChange(of: texter) { newValue in
+                        if newValue.count > 15 {
+                            texter = String(newValue.prefix(15))
+                        }
+                    }
+            }
+            
+        }
+        .padding(.leading, 40)
+        .padding(.trailing, 40)
+        .padding(.top, 10)
+        .padding(.bottom, 10)
         
         VStack(alignment: .center){
+            Divider().padding(20)
+            
             FlowStack(spacing: CGSize(width: 10, height: 10)){
                 ForEach(runners) { runner in
                     

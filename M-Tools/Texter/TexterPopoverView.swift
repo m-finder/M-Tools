@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct TexterPopoverView: View {
-    @AppStorage("texter") var Texter: String = String(localized: "Drink more water.")
+    @AppStorage("texter") var texter: String = String(localized: "Drink more water.")
     @AppStorage("colorIndex") var colorIndex: Int = 0
     @ObservedObject var colorModel : ColorModel = ColorModel()
     
@@ -40,8 +40,13 @@ struct TexterPopoverView: View {
                 Divider()
 
                 LabelledDivider(label: String(localized: "MenuBar Text"))
-                TextField(String(localized: "Input something"), text: $Texter)
+                TextField(String(localized: "Input something"), text: $texter)
                     .textFieldStyle(.roundedBorder)
+                    .onChange(of: texter) { newValue in
+                        if newValue.count > 15 {
+                            texter = String(newValue.prefix(15))
+                        }
+                    }
             }
             
             // 多彩文字
