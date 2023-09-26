@@ -155,27 +155,27 @@ class AppDelegate: NSObject, NSApplicationDelegate{
     
     private func setupCpuMonitorIcon() {
         cpuStatusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
-        setupMonitorIconView(item: cpuStatusItem, view: AnyView(CpuView().padding(5)))
+        setupMonitorIconView(item: cpuStatusItem, view: AnyView(CpuView().padding(3)))
     }
     
     private func setupMemoryMnoitorIcon() {
         memoryStatusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
-        setupMonitorIconView(item: memoryStatusItem, view: AnyView(MemoryView().padding(5)))
+        setupMonitorIconView(item: memoryStatusItem, view: AnyView(MemoryView().padding(3)))
     }
     
     private func setupBatteryMonitorIcon() {
         batteryStatusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
-        setupMonitorIconView(item: batteryStatusItem, view: AnyView(BatteryView().padding(5)))
+        setupMonitorIconView(item: batteryStatusItem, view: AnyView(BatteryView().padding(3)))
     }
     
     private func setupDiskMonitorIcon() {
         diskStatusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
-        setupMonitorIconView(item: diskStatusItem, view: AnyView(DiskView().padding(5)))
+        setupMonitorIconView(item: diskStatusItem, view: AnyView(DiskView().padding(3)))
     }
     
     private func setupNetworkMonitorIcon() {
         networkStatusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
-        setupMonitorIconView(item: networkStatusItem, view: AnyView(NetworkView().padding(5)))
+        setupMonitorIconView(item: networkStatusItem, view: AnyView(NetworkView().padding(3)))
     }
     
     private func setupMonitorIconView(item: NSStatusItem?, view: AnyView) {

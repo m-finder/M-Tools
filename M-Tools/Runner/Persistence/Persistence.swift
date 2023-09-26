@@ -125,11 +125,9 @@ struct PersistenceController {
             fatalError("Runner出现了问题")
         }
         
-        // 已存在先清空
+        // 已存在直接取，不清空
         if !res.isEmpty {
-            for item in res{
-                context.delete(item)
-            }
+            return res.first!
         }
         
         guard let url = Bundle.main.url(forResource: "mariohello", withExtension: "gif") else {
