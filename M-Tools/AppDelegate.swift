@@ -113,7 +113,9 @@ class AppDelegate: NSObject, NSApplicationDelegate{
         menu.addItem(monitorMenu)
         
         // hidder menu
-        menu.addItem(NSMenuItem(title: "Hidder", action: #selector(toggleHidder(_:)), keyEquivalent: ""))
+        let hidderMenu = NSMenuItem(title: "Hidder", action: #selector(toggleHidder(_:)), keyEquivalent: "")
+        hidderMenu.state = showHidder ? .on : .off
+        menu.addItem(hidderMenu)
         
         
         menu.addItem(NSMenuItem.separator())
