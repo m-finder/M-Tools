@@ -13,6 +13,7 @@ class AppDelegate: NSObject, NSApplicationDelegate{
     // runner
     let persistenceController = PersistenceController.shared
     private var statusBarItem: NSStatusItem?
+    private var settingsWindow: NSWindow?
     
     // texter
     private var texterStatusItem: NSStatusItem?
@@ -224,13 +225,31 @@ class AppDelegate: NSObject, NSApplicationDelegate{
     }
     
     @IBAction func settingView(_ sender: Any) {
-        if #available(macOS 13, *) {
-            NSApp.sendAction(Selector(("showSettingsWindow:")), to: nil, from: nil)
-        } else {
-            NSApp.sendAction(Selector(("showPreferencesWindow:")), to: nil, from: nil)
+        if settingsWindow == nil {
+            let settingsView = SettingsView()
+                .frame(width: 455, height: 580)
+                .environment(\.managedObjectContext, persistenceController.container.viewContext)
+            
+            settingsWindow = NSWindow(
+                contentRect: NSRect(x: 0, y: 0, width: 0, height: 0),
+                styleMask: [.titled, .closable, .miniaturizable, .resizable, .fullSizeContentView],
+                backing: .buffered,
+                defer: false
+            )
+            settingsWindow?.center()
+            settingsWindow?.title = String(localized: "Setting")
+            settingsWindow?.isReleasedWhenClosed = false
+            settingsWindow?.contentView = NSHostingView(rootView: settingsView)
         }
-        NSApplication.shared.activate(ignoringOtherApps: true)
+        NSApp.activate(ignoringOtherApps: true)
+        settingsWindow?.makeKeyAndOrderFront(nil)
     }
+    
+    func windowShouldClose(_ sender: NSWindow) -> Bool {
+        print("xxx")
+            sender.orderOut(self)
+            return false
+        }
     
     @IBAction func quit(_ sender: Any){
         NSApplication.shared.terminate(nil)

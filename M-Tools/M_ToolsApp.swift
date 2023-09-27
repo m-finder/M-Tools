@@ -16,8 +16,7 @@ struct M_ToolsApp: App {
     var body: some Scene {
 
         Settings {
-            SettingsView().frame(width: 455, height: 580).environment(\.managedObjectContext, persistenceController.container.viewContext)
+            EmptyView()
         }
-        
     }
 }
