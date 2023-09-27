@@ -42,7 +42,10 @@ class AppDelegate: NSObject, NSApplicationDelegate{
     
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         setupRunnerIcon()
-        setupTexterIcon()
+        
+        if showTexter {
+            setupTexterIcon()
+        }
 
         if showCpu {
             setupCpuMonitorIcon()
@@ -241,15 +244,10 @@ class AppDelegate: NSObject, NSApplicationDelegate{
             settingsWindow?.isReleasedWhenClosed = false
             settingsWindow?.contentView = NSHostingView(rootView: settingsView)
         }
-        NSApp.activate(ignoringOtherApps: true)
         settingsWindow?.makeKeyAndOrderFront(nil)
+        settingsWindow?.orderFrontRegardless()
+        NSApp.activate(ignoringOtherApps: true)
     }
-    
-    func windowShouldClose(_ sender: NSWindow) -> Bool {
-        print("xxx")
-            sender.orderOut(self)
-            return false
-        }
     
     @IBAction func quit(_ sender: Any){
         NSApplication.shared.terminate(nil)
@@ -258,6 +256,13 @@ class AppDelegate: NSObject, NSApplicationDelegate{
     @IBAction func toggleTexter(_ sender: NSMenuItem) {
         showTexter.toggle()
         sender.state = showTexter ? .on : .off
+        if showTexter {
+            setupTexterIcon()
+        }else{
+            if texterStatusItem != nil {
+                NSStatusBar.system.removeStatusItem(texterStatusItem!)
+            }
+        }
     }
     
     @IBAction func texterViewPopover(_ sender: NSStatusBarButton){

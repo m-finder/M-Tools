@@ -110,14 +110,24 @@ struct SettingsView: View {
                 Divider().padding(20)
                 Toggle(String(localized: "Launch on Startup"), isOn: $startUp)
                     .onChange(of: startUp, perform: { newValue in
-                        if newValue {
-                            if SMAppService.mainApp.status == .enabled {
+                        if #available(macOS 13.0, *) {
+                            if newValue {
+                                if SMAppService.mainApp.status == .enabled {
+                                    try? SMAppService.mainApp.unregister()
+                                }
+                                
+                                try? SMAppService.mainApp.register()
+                            } else {
                                 try? SMAppService.mainApp.unregister()
                             }
-                            
-                            try? SMAppService.mainApp.register()
-                        } else {
-                            try? SMAppService.mainApp.unregister()
+                        }
+                        
+                        if #available(macOS 12.0, *){
+                            if SMLoginItemSetEnabled(Bundle.main.bundleIdentifier! as CFString, newValue) {
+                                print("开机自启设置成功")
+                            } else {
+                                print("开机自启设置失败")
+                            }
                         }
                     })
                     .toggleStyle(SwitchToggleStyle())
